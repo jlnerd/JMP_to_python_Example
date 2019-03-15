@@ -1,0 +1,22 @@
+dt=Current Data Table();
+
+//Build...
+Label = "x_y_graph";
+
+try(dt<< Delete Table Property(Label));	
+
+dt<<New Script(Label,
+	Label = "x_y_graph";
+	//Build Graph
+		graph = Current Data Table()<<Graph Builder(
+			Size( 334, 307 ),
+			Show Control Panel( 0 ),
+			Fit to Window( "Off" ),
+			Variables( X( :x ), Y( :y_true ), Y( :y_pred, Position( 1 ) ) ),
+			Elements( Points( X, Y( 1 ), Y( 2 ), Legend( 5 ) ) ),
+			SendToReport(
+				Dispatch( {}, "Graph Builder", OutlineBox, {Set Title( Label )} ),
+				Dispatch( {}, "graph title", TextEditBox, {Set Text( "" )} )
+			)
+	)
+);

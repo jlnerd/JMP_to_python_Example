@@ -1,0 +1,17 @@
+
+
+year = char(Year(today()));
+
+month = Month(today());
+month = Repeat( "0", 2 - Length(char(month))) || char(month);
+
+day = Day(today());
+day = Repeat( "0", 2 - Length(char(day))) || char(day);
+
+hour = Hour(today());
+hour = Repeat( "0", 2 - Length(char(hour))) || char(hour);
+
+minute = minute(today());
+minute = Repeat( "0", 2 - Length(char(minute))) || char(minute);
+
+time_stamp = Char(year||"."||month||"."||day||"-"||hour||"."||minute);

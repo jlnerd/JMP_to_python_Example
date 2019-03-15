@@ -1,0 +1,47 @@
+﻿report_name = "python_processed_data";
+
+try(close(report_name, no save));
+
+//Prompt Load File After Compiling
+	include("Prompt_Load_File_After_Compiling.jsl");
+//Prompt to select a save directory		
+	path_save_folder = Pick Directory ( "Select a folder to save the file compiled files in" );
+//Build time stamp
+	include("Build_time_stamp.jsl");
+	print(time_stamp);
+	time_stamp = time_stamp||"_";
+	path_save_folder = path_save_folder||time_stamp;
+//Compile the data
+	include("Build_python_paths.jsl"); //This builds some default file paths that will be passed into python
+	include("fetch_python_executable_path.jsl"); //This tells JMP where the python program is stored
+
+	//Run python
+		txt=runprogram(executable(python_executable),options({path_python_file, path_root_folder,path_save_folder, python_executable}),readfunction("text"));
+		print(txt);
+
+if(contains(txt,"Traceback")==0|contains(txt,"Errno")==0, //Only proceed if python error didn't occur
+	
+	if(load_file_boolean==1,
+				
+		dt = open(path_output_file,invisible);
+		
+		//Apply Default Formatting
+			include("Build_Default_Column_Format.jsl");
+
+			newdt=Default_Columns_dt<<Concatenate(
+				dt, 
+				"Append to first table",
+				);
+				dtname = dt <<get name();
+				close(dt, no save);
+				dt = newdt;
+				dt <<set name(report_name);
+				dt << Show Window();
+		
+		//Build Report Graphs
+			include("Build_Visualization_Report.jsl")		
+	),	
+	
+	//Else, if python error occured, abort
+		stop();
+);

@@ -1,0 +1,20 @@
+dt=Current Data Table();
+
+//Build...
+Label = "histogram";
+
+try(dt<< Delete Table Property(Label));	
+
+dt<<New Script(Label,
+	
+	//Build Graph
+		graph = Current Data Table()<<Distribution(
+			Stack( 1 ),
+			Continuous Distribution(
+				Column( :y_true ),
+				Horizontal Layout( 1 ),
+				Vertical( 0 ),
+				Fit Distribution( Normal )
+			)
+		)
+);

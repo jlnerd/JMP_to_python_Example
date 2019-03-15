@@ -1,0 +1,1 @@
+if(Host is(Windows)==1,		python_executable = "python",	Host is(Mac)==1,		python_executable = Get Environment Variable("HOME")||"/anaconda3/bin/python3.6";		if(File Exists(python_executable)==0,			python_executable = "/anaconda3/bin/python3.6";		););

@@ -1,0 +1,25 @@
+dt=current data table();
+
+//Add Sub Scripts to Data Table
+	include("Build_x_y_graph.jsl");
+	include("Build_y_true_vs_y_pred_graph.jsl");
+	include("Build_histogram.jsl");
+	
+//Build Summary Report for Rel Wafer Mapper	
+	
+	try(dt<< Delete Table Property( "Visualization_Report" ));
+	
+	dt<<New Script("Visualization_Report",
+		dt = current data table();
+		
+		Visualization_Report=New Window("Visualization_Report",
+			V List Box(
+				H List Box(
+					eval(dt << get table property("x_y_graph")),
+					eval(dt << get table property("y_true_vs_y_pred_graph")),
+				),
+				eval(dt << get table property("histogram")),		
+			),
+		);
+	);
+	dt<<run script ("Visualization_Report");

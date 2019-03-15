@@ -1,0 +1,31 @@
+dt=Current Data Table();
+
+//Build...
+Label = "y_true_vs_y_pred_graph";
+
+try(dt<< Delete Table Property(Label));	
+
+dt<<New Script(Label,
+	Label = "y_true_vs_y_pred_graph";
+
+	//Build Graph
+		graph = Current Data Table()<<Graph Builder(
+			Size( 334, 307 ),
+			Show Control Panel( 0 ),
+			Fit to Window( "Off" ),
+			Variables( X( :y_true ), Y( :y_pred ) ),
+			Elements(
+				Line Of Fit( X, Y, Legend( 7 ), Root Mean Square Error( 1 ) ),
+				Points( X, Y, Legend( 8 ) )
+			),
+			SendToReport(
+				Dispatch(
+					{},
+					"Graph Builder",
+					OutlineBox,
+					{Set Title( "y_true_vs_y_pred_graph" )}
+				),
+				Dispatch( {}, "graph title", TextEditBox, {Set Text( "" )} )
+			)
+		)
+);

@@ -1,0 +1,7 @@
+New Window("Load File After Compiling?", << Modal,
+			V list box(
+				Textbox("Load File After Compiling?"),
+
+				H List Box(ButtonBox("Yes", load_file_boolean=1),ButtonBox("No",load_file_boolean=0))
+			)
+		);

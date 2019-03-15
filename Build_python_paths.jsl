@@ -1,0 +1,16 @@
+
+if(Host is(Windows)==1,
+		path_jsl_script = Substr(Get Default Directory(), 2, 999);
+		path_root_folder = Substitute(path_jsl_script, "/", "\" );
+		path_temp_folder = path_root_folder||"Temp";
+		path_python_folder = path_root_folder||"Python";
+		path_python_file = path_python_folder||"\Pull_"||report_name||".py";
+		path_output_file = path_temp_folder||"\df_"||report_name||".csv",
+	Host is(Mac)==1,
+		path_jsl_script = Get Default Directory();
+		path_root_folder = path_jsl_script;
+		path_temp_folder = path_root_folder||"Temp";
+		path_python_folder = path_root_folder||"Python";
+		path_python_file = path_python_folder||"/Pull_"||report_name||".py";
+		path_output_file = path_temp_folder||"/df_"||report_name||".csv";
+);

@@ -1,0 +1,11 @@
+﻿//Defines a dt with some default formatting you want, in case some columns are typically autoimported as continuous when you really want categorical or something.
+
+try(close(data table("Default Column Format Table"),No Save));
+
+Default_Columns_dt=
+	New Table( "Default Column Format Table" ,
+		invisible(1),	
+		New Column( "x", numeric, continuous ),
+		New Column( "y_true", numeric, continuous),
+		New Column( "y_pred", numeric, continuous ),
+	);
